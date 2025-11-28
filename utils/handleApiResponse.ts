@@ -13,7 +13,7 @@ export const handleApiResponse = async <T = any>(
     return { status: res.status, data: res.data };
   } catch (err: any) {
     if (err.response) {
-      throw new Error(err.response.data?.message || "API Error");
+      throw new Error(err.response.data?.detail || "API Error");
     } else if (err.request) {
       throw new Error("Network error. Please check your connection.");
     } else {

@@ -9,6 +9,7 @@ interface InputProps {
   value: any;
   className?: string;
   editable?: boolean;
+  error?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -19,6 +20,8 @@ const Input: React.FC<InputProps> = ({
   className,
   value,
   editable = true,
+  error,
+  ...Props
 }) => {
   return (
     <View className={` ${className || ""}`}>
@@ -31,7 +34,9 @@ const Input: React.FC<InputProps> = ({
         secureTextEntry={secureTextEntry}
         value={value}
         editable={editable}
+        {...Props}
       />
+      {error && <Text style={{ color: "red", marginTop: 2 }}>{error}</Text>}
     </View>
   );
 };

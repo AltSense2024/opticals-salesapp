@@ -15,11 +15,20 @@ interface CustomerFormValues {
 
 class CustomerServices {
   create_customer = async (formValues: CustomerFormValues) => {
-    return handleApiResponse(api.post("/customer/create_customer", formValues));
+    return handleApiResponse(api.post("/customer/", formValues));
   };
 
-  get_all_customers = async () => {
-    return handleApiResponse(api.get("/customer/get_all_customers"));
+  // get_all_customers = async () => {
+  //   return handleApiResponse(api.get("/customer/"));
+  // };
+  get_all_customers = async ({ page = 1, limit = 5, q = "" } = {}) => {
+    const params: any = { page, limit };
+    if (q && q.trim()) params.q = q;
+    return handleApiResponse(api.get("/customer/", { params }));
+  };
+
+  get_mcn_number = async () => {
+    return handleApiResponse(api.get("/customer/show_mcn_number"));
   };
 }
 

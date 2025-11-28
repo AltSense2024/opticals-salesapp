@@ -18,6 +18,7 @@ interface ProductState {
   deleteProduct: (id: string) => void;
   getProductById: (id: string) => Products | undefined;
   editProduct: (updatedProduct: Products) => void;
+  clearProducts: () => void;
 }
 
 export const useProductState = create<ProductState>((set, get) => ({

@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
 
   const login = async (email: string, password: string) => {
+    // useRouter().replace("/(tabs)/home");
     try {
       const user = await api.post("auth/login", { email, password });
       if (user) {
@@ -35,9 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(loggedInUser);
         setToken(token);
         const get_token = await AsyncStorage.getItem("auth_token");
-        console.log("token", get_token);
         useRouter().replace("/(tabs)/home");
-        console.log("User", user.data.access_token);
       }
     } catch (e) {
       console.error("Failed to save auth state:", e);
@@ -50,6 +49,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       await AsyncStorage.removeItem("auth-token");
       setUser(null);
       setToken(null);
+      useRouter().replace("/login");
     } catch (e) {
       console.error("Failed to clear auth state:", e);
     }

@@ -66,12 +66,12 @@ const addproductpage = () => {
   };
 
   return (
-    <View className="p-8">
+    <View className="p-8 flex-[1]">
       <Text className="text-2xl font-bold text-primary my-2">
         {" "}
         Product Details
       </Text>
-      <View className="border-2 border-primary p-5 rounded-2xl">
+      <View className="border-2 border-primary p-5 rounded-2xl flex-[1]">
         <Text className="font-semibold text-xl my-2">Product Information </Text>
         <AddproductForm
           defaultValues={initalValuesForCreate}

@@ -9,8 +9,9 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
 import { AuthProvider } from "@/context/authContext";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { ProductProvider } from "@/context/ProductContext";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import ToastManager from "toastify-react-native/components/ToastManager";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -28,26 +29,27 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "light" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={DefaultTheme}>
       <AuthProvider>
         <ProductProvider>
           <Stack
             screenOptions={{ headerShown: false }}
-            initialRouteName="login"
+            // initialRouteName="login"
           >
-            <Stack.Screen name="login" options={{ headerShown: false }} />
+            {/* <Stack.Screen name="login" options={{ headerShown: false }} /> */}
 
             {/* Customer Details */}
-            <Stack.Screen
+            {/* <Stack.Screen
               name="customer/[id]"
               options={{ headerShown: false }}
-            />
+            /> */}
 
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />
           </Stack>
           <StatusBar style="auto" />
         </ProductProvider>
+        <ToastManager />
       </AuthProvider>
     </ThemeProvider>
   );

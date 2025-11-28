@@ -23,15 +23,13 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, rightButton }) => {
         justifyContent: "space-between",
         paddingVertical: 12,
         // paddingHorizontal: 16,
-
-        borderBottomWidth: 1,
-        borderBottomColor: "#ddd",
       }}
     >
       {/* Back Button */}
       <HeaderBackButton
-        onPress={() => router.back()}
+        onPress={() => router.replace("/(tabs)/home")}
         tintColor="#491B6D"
+
         // labelVisible={false}
       />
 
@@ -40,10 +38,11 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, rightButton }) => {
         style={{
           fontSize: 20,
           fontWeight: "bold",
-          color: "#333",
+          // color: "#333",
           flex: 1,
           textAlign: "center",
         }}
+        className="text-primary"
       >
         {title}
       </Text>

@@ -100,7 +100,7 @@ const AddProductForm = ({
   ]);
 
   return (
-    <View>
+    <View >
       {/* Product Name */}
       <Controller
         name="productName"
@@ -201,7 +201,7 @@ const AddProductForm = ({
               placeholder="Total Amount"
               onChangeText={(val) => field.onChange(Number(val))}
               value={String(field.value)}
-              className="flex-1"
+           
             />
           </View>
         )}

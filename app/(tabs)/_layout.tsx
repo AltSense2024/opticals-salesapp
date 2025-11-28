@@ -2,15 +2,12 @@ import { Tabs } from "expo-router";
 import React from "react";
 import { Platform } from "react-native";
 
-import { Colors, primary } from "@/constants/Colors";
+import { primary } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import Home from "../../assets/SVG/Bottombar/Home.svg";
 import AddCustomer from "../../assets/SVG/Bottombar/AddCustomer.svg";
-import ViewProduct from "../../assets/SVG/Bottombar/ViewProduct.svg";
-import ViewProductFill from "../../assets/SVG/Bottombar/ViewProductFill.svg";
+import Home from "../../assets/SVG/Bottombar/Home.svg";
 import Invoice from "../../assets/SVG/Bottombar/Invoice.svg";
-import Settings from "../../assets/SVG/Bottombar/Settings.svg";
-import SettingsFill from "../../assets/SVG/Bottombar/AddCustomerFill.svg";
+import ViewProduct from "../../assets/SVG/Bottombar/ViewProduct.svg";
 import "../../global.css";
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -45,28 +42,26 @@ export default function TabLayout() {
         name="add_customer"
         options={{
           title: "Add Customer",
-          tabBarIcon: ({ focused }) =>
-            focused ? (
-              <SettingsFill width={24} height={24} />
-            ) : (
-              <AddCustomer
-                width={24}
-                height={24}
-                color={focused ? "primary" : "#999"}
-              />
-            ),
+          tabBarIcon: ({ focused }) => (
+            <AddCustomer
+              width={24}
+              height={24}
+              color={focused ? "primary" : "#999"}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="view_product"
         options={{
           title: "View Product",
-          tabBarIcon: ({ focused }) =>
-            focused ? (
-              <ViewProductFill width={24} height={24} />
-            ) : (
-              <ViewProduct width={24} height={24} />
-            ),
+          tabBarIcon: ({ focused }) => (
+            <ViewProduct
+              width={24}
+              height={24}
+              color={focused ? "primary" : "#999"}
+            />
+          ),
         }}
       />
       <Tabs.Screen
@@ -82,7 +77,8 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
+        // name="settings"
         name="settings"
         options={{
           title: "Settings",
@@ -97,7 +93,7 @@ export default function TabLayout() {
               />
             ),
         }}
-      />
+      /> */}
     </Tabs>
   );
 }

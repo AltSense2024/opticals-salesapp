@@ -7,14 +7,15 @@ const id = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
 
   const defaultValues = {
-    mcn_number: "sample",
-    customer_name: "sadf",
-    phone_number: "2323122",
-    place: "erw",
-    age: "23",
-    address: "rw",
-    reference: "er",
-    family: "er",
+    mcn_number: "",
+    customer_name: "",
+    phone_number: "",
+    alternate_contact_number: "",
+    place: "",
+    age: "",
+    address: "",
+    reference: "",
+    family_references: "",
   };
 
   return (

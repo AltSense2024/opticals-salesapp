@@ -1,5 +1,3 @@
-import * as Yup from "yup";
-
 export const CustomerDetailsForm = [
   {
     name: "MCN Number",
@@ -20,6 +18,13 @@ export const CustomerDetailsForm = [
     key: "contact_number",
     type: "number",
     placeholder: "Enter phone number",
+    required: true,
+  },
+  {
+    name: "Alternate Phone Number",
+    key: "alternate_contact_number",
+    type: "number",
+    placeholder: "Enter Alternate phone number",
     required: true,
   },
 
@@ -46,14 +51,31 @@ export const CustomerDetailsForm = [
   },
 ];
 
-export const customerFormValidation = Yup.object().shape({
-  // mcn_number: Yup.string()
-  //   .required("MCN Number is required")
-  //   .matches(/^[0-9]+$/, "MCN Number must be numeric"),
-  // customer_name: Yup.string()
-  //   .required("Customer Name is required")
-  //   .min(2, "Too short"),
-  contact_number: Yup.string()
-    .required("Phone number is required")
-    .matches(/^[0-9]{10}$/, "Phone number must be 10 digits"),
+import { z } from "zod";
+
+// 1. Customer form validation schema
+export const customerFormSchema = z.object({
+  mcnNumber: z
+    .string()
+    .min(1, "MCN Number is required")
+    .max(20, "MCN Number must be less than 20 characters"),
+  name: z.string().min(1, "Name is required"),
+  contact_number: z
+    .string()
+    .min(10, "Contact number must be at least 10 digits")
+    .max(15, "Contact number must be less than 15 digits"),
+
+  place: z.string().optional(),
+  age: z
+    .string()
+    .refine(
+      (val) => !val || /^[0-9]+$/.test(val),
+      "Age must be a valid number"
+    ),
+  address: z.string().optional(),
+  reference: z.string().optional(),
+  family_references: z.string().optional(),
 });
+
+// 2. Type inference
+export type CustomerFormValues = z.infer<typeof customerFormSchema>;
