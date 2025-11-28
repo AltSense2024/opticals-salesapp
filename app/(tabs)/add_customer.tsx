@@ -64,11 +64,11 @@ const AddCustomer = () => {
             onSubmit={(values) => create_customer(values)}
           />
         </View>
-
+{/* 
         <Button
           name="Bill page"
           onPress={() => useRouter().push("/order/orderpage")}
-        />
+        /> */}
       </View>
       <SuccessAndErrorModal
         status={status}

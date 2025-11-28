@@ -10,8 +10,8 @@ import React, { useState } from "react";
 import { Alert, Text, View } from "react-native";
 
 const Login = () => {
-  const [email, setEmail] = useState("saghulahmed10@gmail.com");
-  const [password, setPassword] = useState("784596aA@");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const router = useRouter();
