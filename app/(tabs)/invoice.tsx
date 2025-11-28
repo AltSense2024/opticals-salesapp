@@ -111,6 +111,7 @@ interface Invoice {
   customer_id?: string;
   total_amount: number;
   customer_name?: any;
+  status: string;
 }
 
 const DEFAULT_PER_PAGE = 25;
@@ -183,6 +184,7 @@ const InvoiceScreen = () => {
           per_page: perPage,
           q: q && q.length > 0 ? q : undefined,
         });
+        console.log("res", res);
 
         const { items, meta } = normalizeResponse(res);
 
@@ -195,12 +197,13 @@ const InvoiceScreen = () => {
               it.doc_number ??
               Math.random().toString()
           ),
-          date: it.date ,
+          date: it.date,
           doc_number: it.doc_number ?? it.docNumber ?? it.document_number ?? "",
           customer_id: it.customer_id ?? it.customer?.id ?? it.customer?._id,
           total_amount: Number(it.total_amount ?? it.total ?? it.amount ?? 0),
           customer_name:
             it.customer_name ?? it.customer ?? it.name ?? it.customer?.name,
+          status: it.payment_status,
         }));
 
         if (p === 1 || replace) {
@@ -323,6 +326,7 @@ const InvoiceScreen = () => {
                 name={item.customer_name?.name ?? item.customer_name ?? "-"}
                 amount={item.total_amount}
                 id={item.id}
+                status={item.status}
               />
             </View>
           )}

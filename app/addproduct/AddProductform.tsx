@@ -100,7 +100,7 @@ const AddProductForm = ({
   ]);
 
   return (
-    <View >
+    <View>
       {/* Product Name */}
       <Controller
         name="productName"
@@ -109,16 +109,35 @@ const AddProductForm = ({
           <DataDropDown
             data={products}
             label="Product Name"
-            value={field.value} // ✅ value from Formik
-            onSelect={(id: string) => {
-              console.log("products", products);
-              const selected = products.find((item) => item.id == id);
+            value={field.value}
+            onSelect={(id) => {
+              const selected = products.find((item) => item.id === id);
               setValue("product_id", selected?.id);
               setValue("productName", selected?.name ?? "");
               if (selected) {
                 setValue("price", selected.price);
                 setValue("quantity", 1);
               }
+            }}
+            loadPage={async (page, q, pageSize) => {
+              console.log("loading products page:", page, "q:", q);
+
+              await fetchProducts({
+                page,
+                limit: pageSize,
+                q,
+                replace: page === 1,
+              });
+
+              return {
+                items: products.map((p) => ({
+                  id: p.id,
+                  label: p.name,
+                  value: p.id,
+                  price: p.price,
+                })),
+                hasMore,
+              };
             }}
           />
         )}
@@ -201,7 +220,6 @@ const AddProductForm = ({
               placeholder="Total Amount"
               onChangeText={(val) => field.onChange(Number(val))}
               value={String(field.value)}
-           
             />
           </View>
         )}

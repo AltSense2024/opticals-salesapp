@@ -9,6 +9,7 @@ interface InvoiceCardProps {
   date: string;
   name: string;
   amount: number;
+  status: string;
 }
 
 const InvoiceCard: React.FC<InvoiceCardProps> = ({
@@ -17,6 +18,7 @@ const InvoiceCard: React.FC<InvoiceCardProps> = ({
   amount,
   date,
   name,
+  status,
 }) => {
   return (
     <View className="bg-[#F8F8F8] p-5 flex-row justify-between items-center rounded-[20]">
@@ -28,6 +30,9 @@ const InvoiceCard: React.FC<InvoiceCardProps> = ({
         <Text className="mb-1 font-bold text-md">
           {moment(date).format("DD-MM-YYYY")}
         </Text>
+        {status == "PAID" && <Text style={{color:"darkgreen"}}>{status}</Text>}
+        {status == "PARTIAL" && <Text style={{color:"orange"}}>{status}</Text>}
+        {status == "UNPAID" && <Text style={{color:"red"}}>{status}</Text>}
       </View>
       <View>
         <Text className="font-bold mb-1 text-center text-xl">Rs {amount}</Text>
