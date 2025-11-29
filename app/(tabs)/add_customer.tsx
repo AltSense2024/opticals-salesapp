@@ -18,7 +18,7 @@ const AddCustomer = () => {
   const { user } = useAuth();
   const router = useRouter();
 
-  const create_customer = async (values: any) => {
+  const create_customer = async (values: any, resetForm: () => void) => {
     try {
       showModal("loading", "");
       const formValues = { ...values, salesperson_id: user?.id };
@@ -27,15 +27,18 @@ const AddCustomer = () => {
       if (response.status === 201) {
         // router.push("/prescription/prescription"); // ✅ use variable
         addCustomer(response.data.customer_details);
+        
         showModal(
           "success",
           "Customer created successfully!",
           () => {
             setOpen(false);
-            router.replace("/prescription/prescription");
+            router.push("/prescription/prescription");
+             resetForm();
           },
           2000
         );
+       
       }
       console.log("response", response);
     } catch (error: any) {
@@ -61,10 +64,10 @@ const AddCustomer = () => {
         <View>
           <CustomerForm
             buttonName="Add Customer"
-            onSubmit={(values) => create_customer(values)}
+            onSubmit={(values,reset) => create_customer(values,reset)}
           />
         </View>
-{/* 
+        {/* 
         <Button
           name="Bill page"
           onPress={() => useRouter().push("/order/orderpage")}

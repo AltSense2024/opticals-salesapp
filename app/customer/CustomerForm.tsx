@@ -23,7 +23,7 @@ interface CustomerFormValues {
 
 interface CustomerProps {
   initialValues?: CustomerFormValues;
-  onSubmit: (values: CustomerFormValues) => void;
+  onSubmit: (values: CustomerFormValues, reset: () => void) => void;
   buttonName: string;
 }
 
@@ -47,6 +47,7 @@ const CustomerForm: React.FC<CustomerProps> = ({
   const {
     control,
     handleSubmit,
+    reset,
     setValue,
     formState: { errors },
   } = useForm<CustomerFormValues>({
@@ -151,7 +152,11 @@ const CustomerForm: React.FC<CustomerProps> = ({
         );
       })}
 
-      <Button name={buttonName} onPress={handleSubmit(onSubmit)} />
+      <Button
+        name={buttonName}
+        // onPress={handleSubmit(onSubmit,reset)}
+        onPress={handleSubmit((values) => onSubmit(values, reset))}
+      />
     </View>
   );
 };

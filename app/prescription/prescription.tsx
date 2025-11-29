@@ -139,6 +139,7 @@ import { usePrescriptionState } from "@/stores/PrescriptionStore";
 import PrescriptionForm, { PrescriptionFormValues } from "./PrescriptionForm";
 import { useApiResponseHandle } from "@/hooks/useApiResponseHandle";
 import SuccessAndErrorModal from "@/components/SuccessAndErrorModal";
+import { useBackToHome } from "@/hooks/useBackToHome";
 
 const Prescription = () => {
   const { addPrescription, prescriptionId } = usePrescriptionState();
@@ -149,7 +150,7 @@ const Prescription = () => {
     useApiResponseHandle();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-
+  useBackToHome();
   console.log("customer", customer);
 
   const handleSubmit = async (
@@ -253,7 +254,7 @@ const Prescription = () => {
           onPress={() => {
             // convenience: if you want to move to next screen without submitting
             // you could also call router.push("/order/orderpage") here
-            router.push("/order/orderpage");
+            router.replace("/order/orderpage");
           }}
         >
           <Text style={styles.primaryBtnText}>Continue</Text>

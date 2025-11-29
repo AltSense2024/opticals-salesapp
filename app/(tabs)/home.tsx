@@ -30,6 +30,7 @@ interface Invoice {
   doc_number: string;
   customer_name: string;
   total_amount: number;
+  status: string;
 }
 
 export default function Home() {
@@ -73,6 +74,7 @@ export default function Home() {
         customer_name:
           it.customer_name ?? it.customer?.name ?? it.name ?? "Unknown",
         total_amount: Number(it.total_amount ?? it.total ?? it.amount ?? 0),
+        status: it.status,
       }));
       setInvoices(normalized);
     } catch (err: any) {
@@ -84,16 +86,13 @@ export default function Home() {
     }
   }, [user?.id]);
 
-
-
+  console.log("user?.id", user?.id);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await fetchOrders();
     setRefreshing(false);
   }, [fetchOrders]);
-
-  
 
   const filtered = useMemo(() => {
     if (!search.trim()) return invoices;
@@ -127,6 +126,7 @@ export default function Home() {
             date={item.date}
             name={item.customer_name}
             amount={item.total_amount}
+            status={item.status}
           />
         </View>
       )}

@@ -1,7 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosError } from "axios";
 
-const url = "https://opticals-backend-d24g.onrender.com/";
+const url = "http://10.0.2.2:8000/";
+// const url = "https://opticals-backend-d24g.onrender.com/";
 const api = axios.create({
   // baseURL: "http://127.0.0.1:8000/",
   // baseURL: "http://192.168.0.4:8000/",
@@ -30,7 +31,7 @@ const processQueue = (error: any, token: string | null = null) => {
 api.interceptors.request.use(
   async (config) => {
     try {
-      const token = await AsyncStorage.getItem("auth_token"); // ✅ await here
+      const token = await AsyncStorage.getItem("access_token"); // ✅ await here
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
       }
@@ -51,7 +52,7 @@ api.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest: any = error.config;
 
-    if (error.response?.status == 401 && !originalRequest._retry) {
+    if (error.response?.status == 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         if (isRefreshing) {
@@ -69,8 +70,8 @@ api.interceptors.response.use(
         const refreshResponse = await axios.post(
           // "http://192.168.0.4:8000/auth/refresh_token",
           // "http://10.0.2.2:8000/auth/refresh_token",
-          `${url}/auth/refresh_token`,
-          { refresh_token: refreshToken },
+          `${url}auth/refresh_token?refresh_token=${refreshToken}`,
+          // { refresh_token: refreshToken },
           { headers: { "Content-Type": "application/json" } }
         );
         const newAccessToken = refreshResponse.data.access_token;
@@ -78,6 +79,7 @@ api.interceptors.response.use(
 
         // Save new tokens
         await AsyncStorage.setItem("access_token", newAccessToken);
+        console.log("new token",newAccessToken);
         await AsyncStorage.setItem("refresh_token", newRefreshToken);
 
         // Update axios default header

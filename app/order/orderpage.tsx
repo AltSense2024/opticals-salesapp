@@ -11,6 +11,7 @@ import OrderForm from "./OrderForm";
 import { HeaderBackButton } from "@react-navigation/elements";
 import { useApiResponseHandle } from "@/hooks/useApiResponseHandle";
 import SuccessAndErrorModal from "@/components/SuccessAndErrorModal";
+import { useBackToHome } from "@/hooks/useBackToHome";
 
 const orderpage = () => {
   const { products, clearProducts } = useProductState();
@@ -24,6 +25,7 @@ const orderpage = () => {
 
   const navigation = useNavigation();
   const router = useRouter();
+  useBackToHome()
 
   useEffect(() => {
     const sub = navigation.addListener("beforeRemove", (e) => {
@@ -37,7 +39,7 @@ const orderpage = () => {
 
   const handelSubmit = async (formValues: any) => {
     try {
-      console.log("formValues", formValues);
+      console.log("formValues", formValues,user?.id);
       showModal("loading", "");
       const values = {
         ...formValues,
@@ -45,6 +47,7 @@ const orderpage = () => {
         estimate_delivery_date: formValues.estimate_delivery_date.toISOString(),
         doc_type: "order",
       };
+      console.log('values', values)
       const response = await invoice_service.create_order(values);
       if (response.status === 201) {
         console.log("response in order page", response);
